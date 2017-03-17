@@ -3,18 +3,7 @@
 #include <vector>
 #include "Eigen/Dense"
 
-class Tools {
-public:
-  /**
-  * Constructor.
-  */
-  Tools();
-
-  /**
-  * Destructor.
-  */
-  virtual ~Tools();
-
+namespace Tools {
   /**
   * A helper method to calculate RMSE.
   */
@@ -23,17 +12,17 @@ public:
   /**
   * A helper method to calculate Jacobians.
   */
-  static Eigen::MatrixXd CalculateJacobian(const Eigen::VectorXd& x_state);
+  Eigen::MatrixXd CalculateJacobian(const Eigen::VectorXd& x_state);
 
   /**
   * A helper method to convert polar to cartesian.
   */
-  static Eigen::VectorXd PolarToCartesian(const Eigen::VectorXd& x_state);
+  Eigen::VectorXd PolarToCartesian(const Eigen::VectorXd& x_state);
 
   /**
   * A helper method to convert cartesian to polar.
   */
-  static Eigen::VectorXd CartesianToPolar(const Eigen::VectorXd& x_state);
+  Eigen::VectorXd CartesianToPolar(const Eigen::VectorXd& x_state);
 };
 
 #endif /* TOOLS_H_ */
