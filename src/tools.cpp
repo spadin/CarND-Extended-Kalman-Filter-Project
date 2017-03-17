@@ -27,12 +27,12 @@ VectorXd Tools::CalculateRMSE(const vector<VectorXd> &estimations,
   //  * the estimation vector size should equal ground truth vector size
   // ... your code here
   if(estimations.size() == 0) {
-    cout << "Error, estimations size is 0" << endl;
+    std::cout << "Error, estimations size is 0" << std::endl;
     return rmse;
   }
 
   if(estimations.size() != ground_truth.size()) {
-    cout << "Error, estimations and ground_truth are not the same size" << endl;
+    std::cout << "Error, estimations and ground_truth are not the same size" << std::endl;
     return rmse;
   }
 
@@ -75,8 +75,8 @@ MatrixXd Tools::CalculateJacobian(const VectorXd& x_state) {
   float pow_15_px2_py2 = pow(px2_py2, 1.5);
 
 	if (px2_py2 == 0) {
-	    cout << "Error in CalculateJacobian: Can't divide by zero." << endl;
-      return Hj;
+    std::cout << "Error in CalculateJacobian: Can't divide by zero." << std::endl;
+    return Hj;
 	}
 
 	float Hj_00 = px / sqrt_px2_py2;
@@ -99,4 +99,44 @@ MatrixXd Tools::CalculateJacobian(const VectorXd& x_state) {
 	      Hj_20, Hj_21, Hj_22, Hj_23;
 
   return Hj;
+}
+
+VectorXd Tools::PolarToCartesian(const VectorXd& x_state) {
+  float rho = x_state[0];
+  float phi = x_state[1];
+  float rho_dot = x_state[2];
+
+  float px = rho * cos(phi);
+  float py = rho * sin(phi);
+  float vx = rho * cos(phi);
+  float vy = rho * sin(phi);
+
+  VectorXd cartesian(4);
+  cartesian << px,
+               py,
+               vx,
+               vy;
+
+  return cartesian;
+}
+
+VectorXd Tools::CartesianToPolar(const VectorXd& x_state) {
+  float px = x_state[0];
+  float py = x_state[1];
+  float vx = x_state[2];
+  float vy = x_state[3];
+
+  float px_2 = px * px;
+  float py_2 = py * py;
+
+  float rho = sqrt(px_2 + py_2);
+  float phi = atan(py / px);
+  float rho_dot = (px * vx + py * vy) / rho;
+
+  VectorXd polar(3);
+  polar << rho,
+           phi,
+           rho_dot;
+
+  return polar;
 }
