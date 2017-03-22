@@ -54,8 +54,7 @@ void KalmanFilter::UpdateEKF(const VectorXd &z) {
   TODO:
     * update the state by using Extended Kalman Filter equations
   */
-  VectorXd cartesian = Tools::PolarToCartesian(z);
-  MatrixXd Hj = Tools::CalculateJacobian(cartesian);
+  MatrixXd Hj = Tools::CalculateJacobian(x_);
   VectorXd z_pred = Tools::CartesianToPolar(x_);
 
   VectorXd y = z - z_pred;
