@@ -109,7 +109,7 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
 
   long current_timestamp = measurement_pack.timestamp_;
   float dt = (current_timestamp - previous_timestamp_) / 1000000.0;
-  int noise_ax = 9;
+  int noise_ax = 15;
   int noise_ay = 9;
 
   ekf_.F_ = MatrixXd(4, 4);
